@@ -11,7 +11,7 @@ const File = fs.File;
 pub fn JE_loadMainShapeTables(shpfile: [:0]const u8) void {
     const SHP_NUM: usize = 12;
 
-    const data_dir: Dir = fs.openDir(data_dir(), .{});
+    const data_dir: Dir = fs.openDir(c.data_dir(), .{});
     defer data_dir.close();
     const f: File = data_dir.openFile(shpfile, .{});
     defer f.close();
