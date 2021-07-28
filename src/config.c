@@ -267,7 +267,7 @@ bool load_opentyrian_config( void )
 	}
 	
 	ConfigSection *section;
-	
+
 	section = config_find_section(config, "video", NULL);
 	if (section != NULL)
 	{

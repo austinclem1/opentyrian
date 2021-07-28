@@ -191,10 +191,9 @@ ConfigSection *config_find_section( Config *config, const char *type, const char
 	assert(config != NULL);
 	assert(type != NULL);
 	
-	ConfigSection *sections_end = &config->sections[config->sections_count];
-	
-	for (ConfigSection *section = &config->sections[0]; section < sections_end; ++section)
+	for (int i = 0; i < config->sections_count; ++i)
 	{
+            ConfigSection *section = &config->sections[i];
 		if (strcmp(config_string_to_cstr(&section->type), type) == 0)
 		{
 			const char *section_name = config_string_to_cstr(&section->name);
@@ -277,7 +276,13 @@ static ConfigOption *get_option_len( ConfigSection *section, const char *key, si
 	assert(section != NULL);
 	assert(key != NULL);
 	
-	ConfigOption *options_end = &section->options[section->options_count];
+	ConfigOption *options_end;
+	if (section->options_count == 0) {
+		return NULL;
+	}
+	else {
+		options_end = &section->options[section->options_count];
+	}
 	for (ConfigOption *option = &section->options[0]; option < options_end; ++option)
 		if (string_equal_len(&option->key, key, key_len))
 			return option;
@@ -781,6 +786,7 @@ bool config_parse( Config *config, FILE *file )
 		config_oom();
 	size_t buffer_end = 1;
 	buffer[buffer_end - 1] = '\0';
+
 	
 	for (size_t line = 0, next_line = 0; ; line = next_line)
 	{

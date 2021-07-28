@@ -58,6 +58,9 @@
 const char *opentyrian_str = "OpenTyrian";
 const char *opentyrian_version = OPENTYRIAN_VERSION;
 
+extern int hello() {
+    return 5;
+}
 void opentyrian_menu( void )
 {
 	typedef enum
@@ -320,6 +323,7 @@ int main( int argc, char *argv[] )
 {
 	mt_srand(time(NULL));
 
+        printf("%s\n", get_user_directory());
 	printf("\nWelcome to... >> %s %s <<\n\n", opentyrian_str, opentyrian_version);
 
 	printf("Copyright (C) 2007-2013 The OpenTyrian Development Team\n\n");
@@ -333,6 +337,7 @@ int main( int argc, char *argv[] )
 		printf("Failed to initialize SDL: %s\n", SDL_GetError());
 		return -1;
 	}
+        SDL_Log("%d\n", hello());
 
 	JE_loadConfiguration();
 
@@ -343,6 +348,7 @@ int main( int argc, char *argv[] )
 	JE_scanForEpisodes();
 
 	init_video();
+
 	init_keyboard();
 	init_joysticks();
 	printf("assuming mouse detected\n"); // SDL can't tell us if there isn't one

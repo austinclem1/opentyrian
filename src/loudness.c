@@ -67,7 +67,7 @@ bool init_audio( void )
 	ask.callback = audio_cb;
 	
 	printf("\trequested %d Hz, %d channels, %d samples\n", ask.freq, ask.channels, ask.samples);
-	
+
 	if (SDL_OpenAudio(&ask, &got) == -1)
 	{
 		fprintf(stderr, "error: failed to initialize SDL audio: %s\n", SDL_GetError());
@@ -164,7 +164,9 @@ void audio_cb( void *user_data, unsigned char *sdl_buffer, int howmuch )
 #endif  /* BYTES_PER_SAMPLE */
 			}
 			
-			channel_pos[ch] += qu;
+                        if (channel_pos[ch] != NULL) {
+                            channel_pos[ch] += qu;
+                        }
 			channel_len[ch] -= qu * BYTES_PER_SAMPLE;
 			
 			/* SYN: If we've emptied a channel buffer, let's free the memory and clear the channel. */
@@ -289,7 +291,7 @@ void JE_multiSamplePlay(JE_byte *buffer, JE_word size, JE_byte chan, JE_byte vol
 		for (int ex = 0; ex < SAMPLE_SCALING; ex++)
 		{
 #if (BYTES_PER_SAMPLE == 2)
-			channel_buffer[chan][(i * SAMPLE_SCALING) + ex] = (Sint8)buffer[i] << 8;
+			channel_buffer[chan][(i * SAMPLE_SCALING) + ex] = (Sint16)buffer[i] << 8;
 #else  /* BYTES_PER_SAMPLE */
 			channel_buffer[chan][(i * SAMPLE_SCALING) + ex] = (Sint8)buffer[i];
 #endif  /* BYTES_PER_SAMPLE */
