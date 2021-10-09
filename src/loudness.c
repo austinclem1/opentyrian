@@ -291,7 +291,8 @@ void JE_multiSamplePlay(JE_byte *buffer, JE_word size, JE_byte chan, JE_byte vol
 		for (int ex = 0; ex < SAMPLE_SCALING; ex++)
 		{
 #if (BYTES_PER_SAMPLE == 2)
-			channel_buffer[chan][(i * SAMPLE_SCALING) + ex] = (Sint16)buffer[i] << 8;
+			/* channel_buffer[chan][(i * SAMPLE_SCALING) + ex] = ((Sint8)(buffer[i])) << 8; */
+			channel_buffer[chan][(i * SAMPLE_SCALING) + ex] = (Uint8)(buffer[i]) << 8;
 #else  /* BYTES_PER_SAMPLE */
 			channel_buffer[chan][(i * SAMPLE_SCALING) + ex] = (Sint8)buffer[i];
 #endif  /* BYTES_PER_SAMPLE */
