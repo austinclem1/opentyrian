@@ -58,9 +58,6 @@
 const char *opentyrian_str = "OpenTyrian";
 const char *opentyrian_version = OPENTYRIAN_VERSION;
 
-extern int hello() {
-    return 5;
-}
 void opentyrian_menu( void )
 {
 	typedef enum
@@ -337,7 +334,6 @@ int main( int argc, char *argv[] )
 		printf("Failed to initialize SDL: %s\n", SDL_GetError());
 		return -1;
 	}
-        SDL_Log("%d\n", hello());
 
 	JE_loadConfiguration();
 
